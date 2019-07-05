@@ -145,16 +145,14 @@
 
         <!--短信-->
         <dependency>
-            <groupId>com.aliyun</groupId>
+            <groupId>com.aliyuncs</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>4.1.1</version>
+            <version>${core.version}</version>
         </dependency>
-
         <dependency>
-            <groupId>com.aliyun</groupId>
+            <groupId>com.aliyuncs.dysmsapi</groupId>
             <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-            <version>1.1.0</version>
+            <version>${dysmsapi.version}</version>
         </dependency>
-
     </dependencies>
 </project>
