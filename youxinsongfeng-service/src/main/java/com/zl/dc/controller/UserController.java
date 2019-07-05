@@ -4,6 +4,8 @@ import com.zl.dc.entity.UserEntity;
 import com.zl.dc.service.UserService;
 import org.apache.catalina.LifecycleState;
 import org.junit.Test;
+import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -19,10 +25,10 @@ import java.util.List;
  * @Description:
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping
 public class UserController {
-@Resource
-private UserService userService;
+    @Resource
+    private UserService userService;
     /**
      * 通过手机号和密码进行查询
      * @param mobile
@@ -30,7 +36,7 @@ private UserService userService;
      * @return
      */
     @GetMapping("/query")
-    public ResponseEntity<UserEntity> queryUser(@RequestParam("mobile") String mobile , @RequestParam("password") String password){
+    public ResponseEntity<UserEntity> queryUser(@RequestParam("phone") String mobile , @RequestParam("password") String password){
         //1 通过手机号查询用户
         UserEntity user = this.userService.findByMobile( mobile );
         //2 判断密码是否正确
@@ -39,6 +45,9 @@ private UserService userService;
             return ResponseEntity.ok( null );
         }
         System.out.println("aaaaa");
+        /*HttpServletRequest request =new Htt;
+        HttpSession session = request.getSession();
+        session.setAttribute("user",user);*/
         //3 正确
         return ResponseEntity.ok( user );
     }

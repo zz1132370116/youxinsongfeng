@@ -31,7 +31,7 @@ public class UserService {
         //1 拼凑条件
         Example example = new Example(UserEntity.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("mobile" , mobile );
+        criteria.andEqualTo("phone" , mobile );
         //2 查询
         return this.userMapper.selectOneByExample( example );
     }

@@ -1,5 +1,7 @@
 package com.zl.dc.entity;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -9,6 +11,7 @@ import java.util.Objects;
  * @Description:
  */
 @Entity
+@ToString
 @Table(name = "user", schema = "db_youxinsongfeng")
 public class UserEntity {
     private int userId;
@@ -119,4 +122,5 @@ public class UserEntity {
     public int hashCode() {
         return Objects.hash(userId, username, image, password, phone, email, cityid, address);
     }
+
 }
