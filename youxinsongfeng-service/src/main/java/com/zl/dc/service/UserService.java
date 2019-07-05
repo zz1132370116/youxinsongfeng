@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.List;
+
 /**
  * @author 舌頭會游泳
  * @Auther: 舌頭會游泳
@@ -34,4 +36,7 @@ public class UserService {
         return this.userMapper.selectOneByExample( example );
     }
 
+    public List<UserEntity> selectAll() {
+        return userMapper.selectAll();
+    }
 }
