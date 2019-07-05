@@ -43,3 +43,4 @@ sc:
       - /regist
       - /sms
       - /login
+      - /selectAll

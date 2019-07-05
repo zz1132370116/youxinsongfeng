@@ -3,6 +3,7 @@ package com.zl.dc.controller;
 import com.zl.dc.entity.UserEntity;
 import com.zl.dc.service.UserService;
 import org.apache.catalina.LifecycleState;
+import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,7 @@ private UserService userService;
         //3 正确
         return ResponseEntity.ok( user );
     }
+    @GetMapping("/selectAll")
     public void selectALl(){
         List<UserEntity> userEntities = userService.selectAll();
         for (UserEntity userEntity : userEntities) {
