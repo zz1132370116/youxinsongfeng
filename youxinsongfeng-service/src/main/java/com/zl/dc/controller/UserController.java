@@ -1,15 +1,22 @@
 package com.zl.dc.controller;
 
+import com.netflix.ribbon.proxy.annotation.Http;
 import com.zl.dc.entity.UserEntity;
 import com.zl.dc.service.UserService;
+import com.zl.dc.vo.BaseResult;
 import org.apache.catalina.LifecycleState;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -18,34 +25,29 @@ import java.util.List;
  * @Description:
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping
 public class UserController {
-@Resource
-private UserService userService;
+    @Resource
+    private UserService userService;
+    @Autowired
+    HttpServletRequest request;
     /**
      * 通过手机号和密码进行查询
-     * @param mobile
-     * @param password
+     * @param userEntity
+     *
      * @return
      */
-    @GetMapping("/query")
-    public ResponseEntity<UserEntity> queryUser(@RequestParam("mobile") String mobile , @RequestParam("password") String password){
+    @PostMapping("/query")
+    public ResponseEntity<BaseResult> queryUser(@RequestBody UserEntity userEntity){
         //1 通过手机号查询用户
-        UserEntity user = this.userService.findByMobile( mobile );
+        UserEntity user = this.userService.findByMobile( userEntity.getPhone() );
         //2 判断密码是否正确
-        if(user == null || !user.getPassword().equals(password)){
+        if(user == null || !user.getPassword().equals(userEntity.getPassword())){
             //密码不对
             return ResponseEntity.ok( null );
         }
-        System.out.println("aaaaa");
         //3 正确
-        return ResponseEntity.ok( user );
-    }
-    public void selectALl(){
-        List<UserEntity> userEntities = userService.selectAll();
-        for (UserEntity userEntity : userEntities) {
-            System.out.println(userEntity);
-        }
+        return ResponseEntity.ok( new BaseResult(0,"登录成功").append("data",user) );
     }
 
 }

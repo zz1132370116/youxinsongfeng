@@ -154,5 +154,16 @@
             <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
             <version>${dysmsapi.version}</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>1.0.6</version>
+        </dependency>
     </dependencies>
 </project>
