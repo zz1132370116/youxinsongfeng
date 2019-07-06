@@ -14,6 +14,7 @@ import java.util.Objects;
 @ToString
 @Table(name = "user", schema = "db_youxinsongfeng")
 public class UserEntity {
+    @Id
     private int userId;
     private String username;
     private String image;

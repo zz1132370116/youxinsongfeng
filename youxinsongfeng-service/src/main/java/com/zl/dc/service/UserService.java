@@ -36,7 +36,11 @@ public class UserService {
         return this.userMapper.selectOneByExample( example );
     }
 
-    public List<UserEntity> selectAll() {
-        return userMapper.selectAll();
+    public UserEntity findByUid(String phone) {
+        //1 拼凑条件
+        Example example = new Example(UserEntity.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("phone" , phone );
+        return userMapper.selectOneByExample(example);
     }
 }
