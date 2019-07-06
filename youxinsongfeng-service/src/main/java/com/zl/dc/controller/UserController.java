@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -66,7 +67,7 @@ public class UserController {
             String code = RandomStringUtils.randomNumeric(4);
 
             //2 并存放到reids中 , key:手机号 ， value：验证码 , 1小时
-            redisTemplate.opsForValue().set( user.getPhone() , code , 1 , TimeUnit.HOURS);
+            redisTemplate.opsForValue().set( user.getPhone() , code , 5 , TimeUnit.MINUTES);
 
             //3 发送短信
             SendSmsResponse smsResponse = SmsUtil.sendSms(user.getPhone(),code);
@@ -78,8 +79,6 @@ public class UserController {
                 return ResponseEntity.ok( new BaseResult(0,smsResponse.getMessage()  ));
             }
 
-
-
         } catch (ClientException e) {
             e.printStackTrace();
             return ResponseEntity.ok( new BaseResult(1,"发送失败" ));
@@ -88,14 +87,22 @@ public class UserController {
     @PostMapping("/regist")
     public ResponseEntity<BaseResult>  regist(@RequestBody UserEntity user){
         try {
-            //保存
-            String s = userService.saveUser(user);
-            if (s.equals("添加成功")){
-                //提示成功
-                return ResponseEntity.ok( new BaseResult( 0 ,"注册成功"));
-            }else if (s.equals("添加失败")){
-                return ResponseEntity.ok( new BaseResult( 1 ,"注册失败,已有账号"));
+            Set<String> keys = redisTemplate.keys(user.getPhone());
+            for (String key : keys) {
+                if (key.equals(user.getCode())){
+                    //保存
+                    String s = userService.saveUser(user);
+                    if (s.equals("添加成功")){
+                        //提示成功
+                        return ResponseEntity.ok( new BaseResult( 0 ,"注册成功"));
+                    }else if (s.equals("添加失败")){
+                        return ResponseEntity.ok( new BaseResult( 1 ,"注册失败,已有账号"));
+                    }
+                }else {
+                    return ResponseEntity.ok( new BaseResult( 1 ,"验证码输入错误或已超时"));
+                }
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();
