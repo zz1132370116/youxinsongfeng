@@ -1,5 +1,8 @@
 package com.zl.dc.entity;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -12,6 +15,9 @@ import java.util.Objects;
  */
 @Entity
 @ToString
+@Getter
+@Setter
+@Data
 @Table(name = "user", schema = "db_youxinsongfeng")
 public class UserEntity {
     @Id
@@ -23,6 +29,8 @@ public class UserEntity {
     private String email;
     private Integer cityid;
     private String address;
+    @Transient
+    private String code;
 
     @Id
     @Column(name = "userId", nullable = false)
