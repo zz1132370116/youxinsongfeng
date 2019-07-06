@@ -111,4 +111,15 @@ public class UserController {
 
         return null;
     }
+
+    @PostMapping("/getUserByPhone")
+    public ResponseEntity<BaseResult> getUserByPhone(@RequestBody UserEntity user){
+        try {
+            UserEntity userEntity = this.userService.findByMobile(user.getPhone());
+            return ResponseEntity.ok( new BaseResult(0,"获取用户信息成功").append("data",userEntity) );
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.ok(new BaseResult(1,"获取用户信息失败"));
+        }
+    }
 }
