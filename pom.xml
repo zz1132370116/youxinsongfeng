@@ -160,6 +160,10 @@
             <version>2.4</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>1.0.6</version>
+        </dependency>
     </dependencies>
 </project>
