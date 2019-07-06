@@ -101,6 +101,7 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.ok( new BaseResult( 1 ,"注册失败"));
         }
+
         return null;
     }
 }
