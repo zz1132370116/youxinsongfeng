@@ -43,4 +43,15 @@ public class UserService {
         criteria.andEqualTo("phone" , phone );
         return userMapper.selectOneByExample(example);
     }
+    public String saveUser(UserEntity user){
+        UserEntity userEntity =findByUid(user.getPhone());
+        if (userEntity ==null){
+            userMapper.insert(user);
+            return "添加成功";
+        }else{
+            return "添加失败";
+        }
+    }
+
+
 }
