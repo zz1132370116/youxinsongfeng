@@ -64,7 +64,7 @@ public class UserController {
             String s = redisTemplate.opsForValue().get(user.getPhone());
             if (s == null || s.equals("")) {
                 redisTemplate.opsForValue().set(user.getPhone(), code, 5, TimeUnit.MINUTES);
-                System.out.println(code);
+                System.out.println("手机验证码为:"+code);
                 //3 发送短信
                 SendSmsResponse smsResponse = SmsUtil.sendSms(user.getPhone(), code);
                 //https://help.aliyun.com/document_detail/55284.html?spm=5176.doc55322.6.557.KvvIJx
