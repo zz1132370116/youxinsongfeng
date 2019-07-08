@@ -71,7 +71,6 @@ public class UserController {
             //发送短信
             //1 生产验证码
             String code = RandomStringUtils.randomNumeric(4);
-
             //2 并存放到reids中 , key:手机号 ， value：验证码 , 1小时
             String s = redisTemplate.opsForValue().get(user.getPhone());
             if (s == null || s.equals("")) {
@@ -107,20 +106,21 @@ public class UserController {
     @PostMapping("/regist")
     public ResponseEntity<BaseResult> regist(@RequestBody UserEntity user) {
         try {
-            Set<String> keys = redisTemplate.keys(user.getPhone());
-            for (String key : keys) {
-                if (key.equals(user.getCode())) {
-                    //保存
-                    String s = userService.saveUser(user);
-                    if (s.equals("添加成功")) {
-                        //提示成功
+            if (user.getPhone() != null) {
+                //通过手机号获取验证码
+                String s = redisTemplate.opsForValue().get(user.getPhone());
+                //通过手机号查询
+                UserEntity byMobile = this.userService.findByMobile(user.getPhone());
+                //用户是否存在
+                if (byMobile == null) {
+                    //校验手机验证码
+                    if (user.getCode().equals(s)) {
+                        userService.saveUser(user);
                         return ResponseEntity.ok(new BaseResult(0, "注册成功"));
-                    } else if (s.equals("添加失败")) {
-                        return ResponseEntity.ok(new BaseResult(1, "注册失败,已有账号"));
                     }
-                } else {
-                    return ResponseEntity.ok(new BaseResult(1, "验证码输入错误或已超时"));
                 }
+            } else {
+                return ResponseEntity.ok(new BaseResult(1, "该手机号已注册"));
             }
 
 
@@ -128,7 +128,6 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.ok(new BaseResult(1, "注册失败"));
         }
-
         return null;
     }
 
@@ -139,7 +138,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/getUserByPhone")
-    public ResponseEntity<BaseResult> findUserByPhone(@RequestBody UserEntity user) {
+    public ResponseEntity<BaseResult> getUserByPhone(@RequestBody UserEntity user) {
         try {
             //根据手机获取用户信息
             UserEntity userEntity = this.userService.findByMobile(user.getPhone());

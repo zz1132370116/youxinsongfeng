@@ -1,8 +1,6 @@
 package com.zl.dc.entity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -15,9 +13,6 @@ import java.util.Objects;
  */
 @Entity
 @ToString
-@Getter
-@Setter
-@Data
 @Table(name = "user", schema = "db_youxinsongfeng")
 public class UserEntity {
     @Id
@@ -121,6 +116,14 @@ public class UserEntity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override
