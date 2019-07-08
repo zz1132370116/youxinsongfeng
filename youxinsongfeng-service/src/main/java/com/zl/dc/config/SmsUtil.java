@@ -60,7 +60,7 @@ public class SmsUtil {
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
         //${name}您好，请凭取件码：${code}，至${address}取件，若有问题请咨询${phone}。
         request.setTemplateParam("{\"code\":\""+code+"\"}");
-
+        System.out.println(code);
         //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
         //request.setSmsUpExtendCode("90997");
 
