@@ -44,4 +44,6 @@ sc:
       - /sms
       - /login
       - /query
-      - /getUserByPhone
+      - /getUserByPhone  #youxinsongfeng-service UserController
+      - /uploadImage     #youxinsongfeng-service UserController
+      - /changeUserInfo  #youxinsongfeng-service UserController

@@ -29,6 +29,7 @@ public class UserEntity {
     private String email;
     private Integer cityid;
     private String address;
+    private String nickname;
     @Transient
     private String code;
 
@@ -100,6 +101,16 @@ public class UserEntity {
 
     public void setCityid(Integer cityid) {
         this.cityid = cityid;
+    }
+
+    @Basic
+    @Column(name = "nickname", nullable = true, length = 100)
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     @Basic
