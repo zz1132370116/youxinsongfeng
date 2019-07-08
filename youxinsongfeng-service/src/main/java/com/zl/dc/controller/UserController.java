@@ -1,36 +1,24 @@
 package com.zl.dc.controller;
-
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
-import com.netflix.ribbon.proxy.annotation.Http;
 import com.zl.dc.config.PreReadUploadConfig;
 import com.zl.dc.config.SmsUtil;
 import com.zl.dc.entity.UserEntity;
 import com.zl.dc.service.UserService;
 import com.zl.dc.vo.BaseResult;
-import org.apache.catalina.LifecycleState;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -57,6 +45,7 @@ public class UserController {
      *
      * @param userEntity
      * @return
+     * @auther zhanglei
      */
     @PostMapping("/query")
     public ResponseEntity<BaseResult> queryUser(@RequestBody UserEntity userEntity) {
@@ -71,6 +60,11 @@ public class UserController {
         return ResponseEntity.ok(new BaseResult(0, "登录成功").append("data", user));
     }
 
+    /**
+     * @param user
+     * @return
+     * @auther zhanglei
+     */
     @PostMapping("/sms")
     public ResponseEntity<BaseResult> sendSms(@RequestBody UserEntity user) {
         try {
@@ -79,17 +73,23 @@ public class UserController {
             String code = RandomStringUtils.randomNumeric(4);
 
             //2 并存放到reids中 , key:手机号 ， value：验证码 , 1小时
-            redisTemplate.opsForValue().set(user.getPhone(), code, 5, TimeUnit.MINUTES);
+            String s = redisTemplate.opsForValue().get(user.getPhone());
+            if (s == null || s.equals("")) {
+                redisTemplate.opsForValue().set(user.getPhone(), code, 5, TimeUnit.MINUTES);
+                System.out.println("手机验证码为:"+code);
+                //3 发送短信
+                SendSmsResponse smsResponse = SmsUtil.sendSms(user.getPhone(), code);
+                //https://help.aliyun.com/document_detail/55284.html?spm=5176.doc55322.6.557.KvvIJx
+                if ("OK".equalsIgnoreCase(smsResponse.getCode())) {
+                    return ResponseEntity.ok(new BaseResult(0, "发送成功"));
+                } else {
+                    return ResponseEntity.ok(new BaseResult(0, smsResponse.getMessage()));
+                }
 
-            //3 发送短信
-            SendSmsResponse smsResponse = SmsUtil.sendSms(user.getPhone(), code);
-
-            //https://help.aliyun.com/document_detail/55284.html?spm=5176.doc55322.6.557.KvvIJx
-            if ("OK".equalsIgnoreCase(smsResponse.getCode())) {
-                return ResponseEntity.ok(new BaseResult(0, "发送成功"));
             } else {
-                return ResponseEntity.ok(new BaseResult(0, smsResponse.getMessage()));
+                return ResponseEntity.ok(new BaseResult(0, "请稍后再点"));
             }
+
 
         } catch (ClientException e) {
             e.printStackTrace();
@@ -97,6 +97,13 @@ public class UserController {
         }
     }
 
+    /**
+     * 注册
+     *
+     * @param user
+     * @return
+     * @auther zhanglei
+     */
     @PostMapping("/regist")
     public ResponseEntity<BaseResult> regist(@RequestBody UserEntity user) {
         try {
@@ -115,6 +122,7 @@ public class UserController {
                     return ResponseEntity.ok(new BaseResult(1, "验证码输入错误或已超时"));
                 }
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();
