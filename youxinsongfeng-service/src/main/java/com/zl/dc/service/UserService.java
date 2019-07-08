@@ -48,5 +48,18 @@ public class UserService {
 
     }
 
+    /**
+     * 修改密码
+     * @param userEntity
+     */
+    public void updatePassword(UserEntity userEntity) {
+        //通过手机号查询用户信息
+        UserEntity byMobile = findByMobile(userEntity.getPhone());
+        //改密码
+        byMobile.setPassword(userEntity.getPassword());
+        //该数据
+        userMapper.updateByPrimaryKeySelective(byMobile);
 
+
+    }
 }

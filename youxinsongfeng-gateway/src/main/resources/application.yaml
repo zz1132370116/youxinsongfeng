@@ -45,3 +45,5 @@ sc:
       - /login
       - /query
       - /getUserByPhone
+      - /updatePassword
+      - /findClassifications

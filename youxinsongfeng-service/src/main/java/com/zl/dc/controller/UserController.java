@@ -2,6 +2,7 @@ package com.zl.dc.controller;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.zl.dc.config.SmsUtil;
+import com.zl.dc.config.SmsUtil2;
 import com.zl.dc.entity.UserEntity;
 import com.zl.dc.service.UserService;
 import com.zl.dc.vo.BaseResult;
@@ -50,6 +51,7 @@ public class UserController {
     }
 
     /**
+     * 发短信
      * @param user
      * @return
      * @auther zhanglei
@@ -126,6 +128,55 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.ok(new BaseResult(1, "获取用户信息失败"));
+        }
+    }
+
+    /**
+     * 修改密码
+     * @param userEntity
+     * @return
+     * @auther zhanglei
+     */
+    @PostMapping("/updatePassword")
+    public ResponseEntity<BaseResult>updatePassword(@RequestBody UserEntity userEntity){
+        userService.updatePassword(userEntity);
+
+        return ResponseEntity.ok(new BaseResult(0,"修改成功"));
+    }
+    /**
+     * 发短信
+     * @param user
+     * @return
+     * @auther zhanglei
+     */
+    @PostMapping("/sms2")
+    public ResponseEntity<BaseResult> sendSms2(@RequestBody UserEntity user) {
+        try {
+            //发送短信
+            //1 生产验证码
+            String code = RandomStringUtils.randomNumeric(4);
+            //2 并存放到reids中 , key:手机号 ， value：验证码 , 1小时
+            String s = redisTemplate.opsForValue().get(user.getPhone());
+            if (s == null || s.equals("")) {
+                redisTemplate.opsForValue().set(user.getPhone(), code, 5, TimeUnit.MINUTES);
+                System.out.println("手机验证码为:"+code);
+                //3 发送短信
+                SendSmsResponse smsResponse = SmsUtil2.sendSms(user.getPhone(), code);
+                //https://help.aliyun.com/document_detail/55284.html?spm=5176.doc55322.6.557.KvvIJx
+                if ("OK".equalsIgnoreCase(smsResponse.getCode())) {
+                    return ResponseEntity.ok(new BaseResult(0, "发送成功"));
+                } else {
+                    return ResponseEntity.ok(new BaseResult(0, smsResponse.getMessage()));
+                }
+
+            } else {
+                return ResponseEntity.ok(new BaseResult(0, "请稍后再点"));
+            }
+
+
+        } catch (ClientException e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(new BaseResult(1, "发送失败"));
         }
     }
 }

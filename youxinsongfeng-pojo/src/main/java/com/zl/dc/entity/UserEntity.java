@@ -17,6 +17,7 @@ import java.util.Objects;
 @Data
 public class UserEntity {
     @Id
+    @Column(name = "userId")
     private int userId;
     private String username;
     private String image;
