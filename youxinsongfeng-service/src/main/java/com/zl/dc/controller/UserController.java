@@ -44,7 +44,7 @@ public class UserController {
     /**
      * 通过手机号和密码进行查询
      * @param userEntity
-     *
+     * @auther zhanglei
      * @return
      */
     @PostMapping("/query")
@@ -59,6 +59,12 @@ public class UserController {
         //3 正确
         return ResponseEntity.ok( new BaseResult(0,"登录成功").append("data",user) );
     }
+
+    /**
+     * @auther zhanglei
+     * @param user
+     * @return
+     */
     @PostMapping("/sms")
     public ResponseEntity<BaseResult> sendSms(@RequestBody UserEntity user){
         try {
@@ -84,6 +90,13 @@ public class UserController {
             return ResponseEntity.ok( new BaseResult(1,"发送失败" ));
         }
     }
+
+    /**
+     * 注册
+     * @param user
+     * @return
+     * @auther zhanglei
+     */
     @PostMapping("/regist")
     public ResponseEntity<BaseResult>  regist(@RequestBody UserEntity user){
         try {

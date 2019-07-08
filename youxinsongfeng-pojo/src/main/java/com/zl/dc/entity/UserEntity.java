@@ -19,6 +19,7 @@ import java.util.Objects;
 @Setter
 @Data
 @Table(name = "user", schema = "db_youxinsongfeng")
+@Data
 public class UserEntity {
     @Id
     private int userId;
