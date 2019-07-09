@@ -27,6 +27,7 @@ public class Classification {
     @Transient
     private List<Classification> classification;
 
+
     @Id
     @Column(name = "classification_id", nullable = false)
     public int getClassificationId() {

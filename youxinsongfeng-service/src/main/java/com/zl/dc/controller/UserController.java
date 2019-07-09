@@ -158,7 +158,6 @@ public class UserController {
     @PostMapping("/updatePassword")
     public ResponseEntity<BaseResult>updatePassword(@RequestBody UserEntity userEntity){
         userService.updatePassword(userEntity);
-
         return ResponseEntity.ok(new BaseResult(0,"修改成功"));
     }
     /**
