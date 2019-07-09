@@ -74,38 +74,6 @@ public class ClassificationService {
                     break;
                 }
             }
-
-
-
-            /*else{
-                //遍历一级分类
-                for (Classification classification1 : classificationList) {
-                    //找到所有二级分类
-                    if (Integer.parseInt(classification.getClassificationParent()) == classification1.getClassificationId()){
-                        classificationList2.add(classification);
-                        //classification1.setClassification(classificationList2);
-                        if (classification1.getClassification() == null){
-                            List<Classification> list2 = new ArrayList<>();
-                            classification1.setClassification(list2);
-                        }
-                        classification1.getClassification().add(classification);
-                    }else{
-                        //遍历二级分类
-                        for (Classification classification2 : classificationList2) {
-                            //找到三级
-                            if (Integer.parseInt(classification.getClassificationParent()) == classification2.getClassificationId()){
-                                classificationList3.add(classification);
-                                if (classification2.getClassification() == null){
-                                    List<Classification> list3 = new ArrayList<>();
-                                    classification2.setClassification(list3);
-                                }
-                                classification2.getClassification().add(classification);
-                                //classification2.setClassification(classificationList3);
-                            }
-                        }
-                    }
-                }
-            }*/
         }
         Iterator<Classification> iterator = classifications.iterator();
         while(iterator.hasNext()){
