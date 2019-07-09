@@ -31,27 +31,81 @@ public class ClassificationService {
         //查询分类
         List<Classification> classifications = classificationMapper.selectAll();
         for (Classification classification : classifications) {
+            //用于判断是否应该结束这一次循环
+            int temp = 0;
+
+            //获取一级分类
             if (classification.getClassificationParent() .equals("0") ){
                 classificationList.add(classification);
-            }else{
+                temp = 1;
+            }
+
+            //获取二级分类
+            for (Classification first: classificationList) {
+                if (temp == 1){
+                    break;
+                }
+                if (Integer.parseInt(classification.getClassificationParent()) == first.getClassificationId()){
+                    classificationList2.add(classification);
+                    if (first.getClassification() == null){
+                        List<Classification> firstChild = new ArrayList<>();
+                        first.setClassification(firstChild);
+                    }
+                    first.getClassification().add(classification);
+                    temp = 1;
+                    break;
+                }
+            }
+
+
+            //获取三级分类
+            for (Classification second : classificationList2) {
+                if (temp == 1){
+                    break;
+                }
+                //找到三级
+                if (Integer.parseInt(classification.getClassificationParent()) == second.getClassificationId()){
+                    classificationList3.add(classification);
+                    if (second.getClassification() == null){
+                        List<Classification> secondChild = new ArrayList<>();
+                        second.setClassification(secondChild);
+                    }
+                    second.getClassification().add(classification);
+                    break;
+                }
+            }
+
+
+
+            /*else{
                 //遍历一级分类
                 for (Classification classification1 : classificationList) {
                     //找到所有二级分类
                     if (Integer.parseInt(classification.getClassificationParent()) == classification1.getClassificationId()){
                         classificationList2.add(classification);
-                        classification1.setClassification(classificationList2);
+                        //classification1.setClassification(classificationList2);
+                        if (classification1.getClassification() == null){
+                            List<Classification> list2 = new ArrayList<>();
+                            classification1.setClassification(list2);
+                        }
+                        classification1.getClassification().add(classification);
                     }else{
                         //遍历二级分类
                         for (Classification classification2 : classificationList2) {
                             //找到三级
                             if (Integer.parseInt(classification.getClassificationParent()) == classification2.getClassificationId()){
                                 classificationList3.add(classification);
-                                classification2.setClassification(classificationList3);
+                                if (classification2.getClassification() == null){
+                                    List<Classification> list3 = new ArrayList<>();
+                                    classification2.setClassification(list3);
+                                }
+                                classification2.getClassification().add(classification);
+                                //classification2.setClassification(classificationList3);
                             }
                         }
                     }
                 }
-            }
+            }*/
         }
         Iterator<Classification> iterator = classifications.iterator();
         while(iterator.hasNext()){
@@ -62,6 +116,8 @@ public class ClassificationService {
                 iterator.remove();
             }
         }
+
+        System.out.println(classificationList);
 
         return classifications;
     }
