@@ -14,7 +14,6 @@ import java.util.Objects;
 @Entity
 @ToString
 @Table(name = "user", schema = "db_youxinsongfeng")
-@Data
 public class UserEntity {
     @Id
     @Column(name = "userId")
@@ -26,6 +25,7 @@ public class UserEntity {
     private String email;
     private Integer cityid;
     private String address;
+    private String nickname;
     @Transient
     private String code;
 
@@ -100,6 +100,16 @@ public class UserEntity {
     }
 
     @Basic
+    @Column(name = "nickname", nullable = true, length = 100)
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    @Basic
     @Column(name = "address", nullable = true, length = 100)
     public String getAddress() {
         return address;
@@ -107,6 +117,14 @@ public class UserEntity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override

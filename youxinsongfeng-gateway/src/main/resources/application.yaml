@@ -47,3 +47,5 @@ sc:
       - /getUserByPhone
       - /updatePassword
       - /findClassifications
+      - /uploadImage     #youxinsongfeng-service UserController
+      - /changeUserInfo  #youxinsongfeng-service UserController

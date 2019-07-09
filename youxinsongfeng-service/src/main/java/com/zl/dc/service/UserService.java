@@ -59,7 +59,15 @@ public class UserService {
         byMobile.setPassword(userEntity.getPassword());
         //该数据
         userMapper.updateByPrimaryKeySelective(byMobile);
+    }
 
+    public  int updateUser(UserEntity userEntity){
+        Example example = new Example(UserEntity.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("phone" , userEntity.getPhone() );
 
+        int updateStatus = userMapper.updateByExampleSelective(userEntity,example);
+        //System.out.println(i);
+        return updateStatus;
     }
 }

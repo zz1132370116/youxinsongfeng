@@ -1,6 +1,7 @@
 package com.zl.dc.controller;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
+import com.zl.dc.config.PreReadUploadConfig;
 import com.zl.dc.config.SmsUtil;
 import com.zl.dc.config.SmsUtil2;
 import com.zl.dc.entity.UserEntity;
@@ -11,8 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,6 +38,8 @@ public class UserController {
     HttpServletRequest request;
     @Resource
     private StringRedisTemplate redisTemplate;
+    @Autowired
+    PreReadUploadConfig uploadConfig;
 
     /**
      * 通过手机号和密码进行查询
@@ -120,9 +131,16 @@ public class UserController {
         return null;
     }
 
+    /**
+     * 根据手机获取用户信息 ----- member.基本会员.基本信息.html
+     *
+     * @param user
+     * @return
+     */
     @PostMapping("/getUserByPhone")
     public ResponseEntity<BaseResult> getUserByPhone(@RequestBody UserEntity user) {
         try {
+            //根据手机获取用户信息
             UserEntity userEntity = this.userService.findByMobile(user.getPhone());
             return ResponseEntity.ok(new BaseResult(0, "获取用户信息成功").append("data", userEntity));
         } catch (Exception e) {
@@ -178,5 +196,75 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.ok(new BaseResult(1, "发送失败"));
         }
+    }
+
+    /**
+     * 上传图片 -----  member.基本会员.基本信息.html
+     *
+     * @param file
+     * @return
+     */
+    @PostMapping("/uploadImage")
+    public ResponseEntity<BaseResult> uploadImage(@RequestParam("file") MultipartFile file) {
+        String saveFilePath = "";
+        String savedFileName = "";
+        if (!file.isEmpty()) {
+            //获得原始文件名;
+            String fileRealName = file.getOriginalFilename();
+            //点号的位置
+            int pointIndex = fileRealName.indexOf(".");
+            //截取文件后缀
+            String fileSuffix = fileRealName.substring(pointIndex);
+            Random random = new Random();
+            String picTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + random.nextInt(10000);
+            savedFileName = picTime.concat(fileSuffix);
+            System.out.println(savedFileName);
+
+            //获取服务器指定文件存取路径
+            //saveFilePath = request.getSession().getServletContext().getRealPath("headicon");
+            //String path = this.getClass().getClassLoader().getResource("").getPath();
+            //System.out.println(path);
+            //saveFilePath = "src/main/resource/static/headicon";
+            saveFilePath = uploadConfig.getUploadPath();
+            System.out.println(saveFilePath);
+
+            /* 构建文件目录 */
+            File fileDir = new File(saveFilePath);
+            if (!fileDir.exists()) {
+                fileDir.mkdirs();
+            }
+            try {
+                FileOutputStream out = new FileOutputStream(saveFilePath + "\\" + savedFileName);
+                // 写入文件
+                out.write(file.getBytes());
+                out.flush();
+                out.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.ok(new BaseResult(1, "图片上传失败"));
+            }
+        }else {
+            return ResponseEntity.ok(new BaseResult(1, "图片上传失败"));
+        }
+        return ResponseEntity.ok(new BaseResult(0, "图片上传成功").append("image","/headicon"+"\\"+savedFileName));
+    }
+
+    /**
+     * 修改用户信息 -----  member.基本会员.基本信息.html
+     * @param userEntity
+     * @return
+     */
+    @PostMapping("/changeUserInfo")
+    public ResponseEntity<BaseResult> changeUserInfo(@RequestBody UserEntity userEntity){
+        //修改用户信息
+        int updateStatus = this.userService.updateUser(userEntity);
+        //判断是否修改成功，修改成功则重新查询
+        if(updateStatus == 1){
+            UserEntity user = this.userService.findByMobile(userEntity.getPhone());
+            return ResponseEntity.ok(new BaseResult(0, "修改成功").append("data", user));
+        }
+        //不成功则返回修改失败
+        return ResponseEntity.ok(new BaseResult(1, "修改失败"));
     }
 }
