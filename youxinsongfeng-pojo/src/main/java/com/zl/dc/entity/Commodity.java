@@ -34,6 +34,8 @@ public class Commodity {
     private String warehouseRequiements;
     @Column(name = "commodity_price", nullable = false)
     private int commodityPrice;
+    @Column(name = "commodity_currency", nullable = false)
+    private String commodityCurrency;
     @Column(name = "commodity_warehouse", nullable = false, length = 100)
     private String commodityWarehouse;
     @Column(name = "commodity_sport", nullable = false, length = 100)
