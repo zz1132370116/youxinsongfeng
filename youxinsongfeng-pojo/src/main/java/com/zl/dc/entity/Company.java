@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,8 +23,6 @@ public class Company {
     private int companyId;
     @Column(name = "company_name", nullable = false, length = 100)
     private String companyName;
-    @Column(name = "cityId", nullable = false)
-    private int cityId;
     @Column(name = "company_address", nullable = false, length = 100)
     private String companyAddress;
     @Column(name = "company_document", nullable = false, length = 100)
@@ -42,6 +41,8 @@ public class Company {
     private String authorization;
     @Transient
     private List<Commodity> commodities;
+    @Transient
+    private String update;
 
 
 
@@ -63,7 +64,6 @@ public class Company {
         if (o == null || getClass() != o.getClass()){ return false;}
         Company company = (Company) o;
         return companyId == company.companyId &&
-                cityId == company.cityId &&
                 Objects.equals(companyName, company.companyName) &&
                 Objects.equals(companyAddress, company.companyAddress) &&
                 Objects.equals(companyDocument, company.companyDocument) &&
@@ -77,6 +77,6 @@ public class Company {
 
     @Override
     public int hashCode() {
-        return Objects.hash(companyId, companyName, cityId, companyAddress, companyDocument, otherDocuments, corporate, operatorName, operatorPosition, operatorPhone, authorization);
+        return Objects.hash(companyId, companyName, companyAddress, companyDocument, otherDocuments, corporate, operatorName, operatorPosition, operatorPhone, authorization);
     }
 }

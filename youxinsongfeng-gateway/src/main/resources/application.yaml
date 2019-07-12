@@ -50,3 +50,4 @@ sc:
       - /uploadImage     #youxinsongfeng-service UserController
       - /changeUserInfo  #youxinsongfeng-service UserController
       - /search
+      - /findAllResources
