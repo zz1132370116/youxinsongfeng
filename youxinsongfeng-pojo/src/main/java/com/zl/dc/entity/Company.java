@@ -1,8 +1,10 @@
 package com.zl.dc.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,130 +14,48 @@ import java.util.Objects;
  */
 @Entity
 @Data
+@ToString
 @Table(name = "company")
 public class Company {
     @Id
-    private int companyId;
-    private String companyName;
-    private int cityId;
-    private String companyAddress;
-    private String companyDocument;
-    private String otherDocuments;
-    private String corporate;
-    private String operatorName;
-    private String operatorPosition;
-    private String operatorPhone;
-    private String authorization;
-
-    @Id
     @Column(name = "companyId", nullable = false)
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
-
-    @Basic
+    private int companyId;
     @Column(name = "company_name", nullable = false, length = 100)
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    @Basic
+    private String companyName;
     @Column(name = "cityId", nullable = false)
-    public int getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
-    }
-
-    @Basic
+    private int cityId;
     @Column(name = "company_address", nullable = false, length = 100)
-    public String getCompanyAddress() {
-        return companyAddress;
-    }
-
-    public void setCompanyAddress(String companyAddress) {
-        this.companyAddress = companyAddress;
-    }
-
-    @Basic
+    private String companyAddress;
     @Column(name = "company_document", nullable = false, length = 100)
-    public String getCompanyDocument() {
-        return companyDocument;
-    }
-
-    public void setCompanyDocument(String companyDocument) {
-        this.companyDocument = companyDocument;
-    }
-
-    @Basic
+    private String companyDocument;
     @Column(name = "other_documents", nullable = false, length = 100)
-    public String getOtherDocuments() {
-        return otherDocuments;
-    }
-
-    public void setOtherDocuments(String otherDocuments) {
-        this.otherDocuments = otherDocuments;
-    }
-
-    @Basic
+    private String otherDocuments;
     @Column(name = "corporate", nullable = false, length = 100)
-    public String getCorporate() {
-        return corporate;
-    }
-
-    public void setCorporate(String corporate) {
-        this.corporate = corporate;
-    }
-
-    @Basic
+    private String corporate;
     @Column(name = "operator_name", nullable = false, length = 100)
-    public String getOperatorName() {
-        return operatorName;
-    }
-
-    public void setOperatorName(String operatorName) {
-        this.operatorName = operatorName;
-    }
-
-    @Basic
+    private String operatorName;
     @Column(name = "operator_position", nullable = false, length = 100)
-    public String getOperatorPosition() {
-        return operatorPosition;
-    }
-
-    public void setOperatorPosition(String operatorPosition) {
-        this.operatorPosition = operatorPosition;
-    }
-
-    @Basic
+    private String operatorPosition;
     @Column(name = "operator_phone", nullable = false, length = 100)
-    public String getOperatorPhone() {
-        return operatorPhone;
-    }
+    private String operatorPhone;
+    @Column(name = "authorization", nullable = false, length = 100)
+    private String authorization;
+    @Transient
+    private List<Commodity> commodities;
 
-    public void setOperatorPhone(String operatorPhone) {
-        this.operatorPhone = operatorPhone;
-    }
+
+
+
 
     @Basic
     @Column(name = "authorization", nullable = false, length = 100)
     public String getAuthorization() {
         return authorization;
     }
-
     public void setAuthorization(String authorization) {
         this.authorization = authorization;
     }
+
 
     @Override
     public boolean equals(Object o) {

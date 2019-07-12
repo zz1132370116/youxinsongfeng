@@ -35,4 +35,5 @@ public class CommodityController {
         return ResponseEntity.ok(new BaseResult(1,"查询失败"));
     }
 
+
 }

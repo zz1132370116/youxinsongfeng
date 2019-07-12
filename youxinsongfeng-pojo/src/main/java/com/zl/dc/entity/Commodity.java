@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -44,7 +45,7 @@ public class Commodity {
     @Column(name = "commodity_image", nullable = true, length = 100)
     private String commodityImage;
     @Transient
-    private Company company;
+    private List<Company> companys;
 
 
     @Override
