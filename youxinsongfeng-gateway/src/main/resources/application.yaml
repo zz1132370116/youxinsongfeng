@@ -49,3 +49,4 @@ sc:
       - /findClassifications
       - /uploadImage     #youxinsongfeng-service UserController
       - /changeUserInfo  #youxinsongfeng-service UserController
+      - /search
