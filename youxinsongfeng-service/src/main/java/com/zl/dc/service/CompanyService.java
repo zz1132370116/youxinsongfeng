@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,19 +32,21 @@ public class CompanyService {
     private ComMapper comMapper;
 
     public List<Company> findAllResources() {
-        Example example = new Example(Commodity.class);
-        Example.Criteria criteria = example.createCriteria();
         //查询所有公司
         List<Company> companies = companyMapper.selectAll();
         if (companies !=null){
             for (Company company : companies) {
                 //从中间表中查询商品信息
                 List<Com> byCompanyId = comMapper.findByCompanyId(company.getCompanyId());
+                List<Commodity> commodities =new ArrayList<>();
                 for (Com com : byCompanyId) {
-                    //查询商品信息
-                    criteria.andEqualTo("commodityId",com.getCommodityId());
-                    List<Commodity> commodities = commodityMapper.selectByExample(example);
+                    Commodity commoditie = commodityMapper.selectByPrimaryKey(com.getCommodityId());
+                    commodities.add(commoditie);
                     company.setCommodities(commodities);
+                    // 格式化当前系统日期 
+                    SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd");
+                     String dateTime_1 = dateFm.format(new Date());
+                    company.setUpdate(dateTime_1);
                 }
             }
         }

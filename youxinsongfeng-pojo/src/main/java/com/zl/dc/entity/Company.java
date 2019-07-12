@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +41,8 @@ public class Company {
     private String authorization;
     @Transient
     private List<Commodity> commodities;
+    @Transient
+    private String update;
 
 
 

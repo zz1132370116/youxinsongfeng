@@ -9,6 +9,7 @@
       <mapping class="com.zl.dc.entity.Classification"/>
       <mapping class="com.zl.dc.entity.Company"/>
       <mapping class="com.zl.dc.entity.Commodity"/>
+      <mapping class="com.zl.dc.entity.Com"/>
       <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
 
