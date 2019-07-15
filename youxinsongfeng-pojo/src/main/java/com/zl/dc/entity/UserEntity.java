@@ -1,5 +1,8 @@
 package com.zl.dc.entity;
 
+import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -9,8 +12,11 @@ import java.util.Objects;
  * @Description:
  */
 @Entity
+@ToString
 @Table(name = "user", schema = "db_youxinsongfeng")
 public class UserEntity {
+    @Id
+    @Column(name = "userId")
     private int userId;
     private String username;
     private String image;
@@ -19,6 +25,9 @@ public class UserEntity {
     private String email;
     private Integer cityid;
     private String address;
+    private String nickname;
+    @Transient
+    private String code;
 
     @Id
     @Column(name = "userId", nullable = false)
@@ -91,6 +100,16 @@ public class UserEntity {
     }
 
     @Basic
+    @Column(name = "nickname", nullable = true, length = 100)
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    @Basic
     @Column(name = "address", nullable = true, length = 100)
     public String getAddress() {
         return address;
@@ -98,6 +117,14 @@ public class UserEntity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override
@@ -119,4 +146,5 @@ public class UserEntity {
     public int hashCode() {
         return Objects.hash(userId, username, image, password, phone, email, cityid, address);
     }
+
 }

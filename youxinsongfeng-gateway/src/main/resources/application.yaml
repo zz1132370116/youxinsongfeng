@@ -43,3 +43,11 @@ sc:
       - /regist
       - /sms
       - /login
+      - /query
+      - /getUserByPhone
+      - /updatePassword
+      - /findClassifications
+      - /uploadImage     #youxinsongfeng-service UserController
+      - /changeUserInfo  #youxinsongfeng-service UserController
+      - /search
+      - /findAllResources

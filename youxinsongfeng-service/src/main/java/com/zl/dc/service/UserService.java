@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.List;
+
 /**
  * @author 舌頭會游泳
  * @Auther: 舌頭會游泳
@@ -29,9 +31,43 @@ public class UserService {
         //1 拼凑条件
         Example example = new Example(UserEntity.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("mobile" , mobile );
+        criteria.andEqualTo("phone" , mobile );
         //2 查询
         return this.userMapper.selectOneByExample( example );
     }
 
+    public UserEntity findByUid(String phone) {
+        //1 拼凑条件
+        Example example = new Example(UserEntity.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("phone" , phone );
+        return userMapper.selectOneByExample(example);
+    }
+    public void saveUser(UserEntity user){
+      userMapper.insert(user);
+
+    }
+
+    /**
+     * 修改密码
+     * @param userEntity
+     */
+    public void updatePassword(UserEntity userEntity) {
+        //通过手机号查询用户信息
+        UserEntity byMobile = findByMobile(userEntity.getPhone());
+        //改密码
+        byMobile.setPassword(userEntity.getPassword());
+        //该数据
+        userMapper.updateByPrimaryKeySelective(byMobile);
+    }
+
+    public  int updateUser(UserEntity userEntity){
+        Example example = new Example(UserEntity.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("phone" , userEntity.getPhone() );
+
+        int updateStatus = userMapper.updateByExampleSelective(userEntity,example);
+        //System.out.println(i);
+        return updateStatus;
+    }
 }
