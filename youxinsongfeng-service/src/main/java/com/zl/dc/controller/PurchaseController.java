@@ -67,9 +67,8 @@ public class PurchaseController {
 
     @PostMapping("/releasePurchase")
     public ResponseEntity<BaseResult> releasePurchase(@RequestBody Purchase purchase, HttpServletRequest request){
-        System.out.println(request.getParameter("productName"));
         System.out.println(purchase);
-        //purchaseService.savePurchase(purchase);
+        purchaseService.savePurchase(purchase);
         return ResponseEntity.ok(new BaseResult(0,"发布采购单成功"));
     }
 }

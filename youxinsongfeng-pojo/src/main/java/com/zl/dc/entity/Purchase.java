@@ -131,7 +131,7 @@ public class Purchase {
     }
 
     public void setProductName(String productName) {
-        productName = productName;
+        this.productName = productName;
     }
 
     public String getOriginRequirements() {
@@ -139,7 +139,7 @@ public class Purchase {
     }
 
     public void setOriginRequirements(String originRequirements) {
-        originRequirements = originRequirements;
+        this.originRequirements = originRequirements;
     }
 
     public String getSpecificationType() {
@@ -147,7 +147,7 @@ public class Purchase {
     }
 
     public void setSpecificationType(String specificationType) {
-        specificationType = specificationType;
+        this.specificationType = specificationType;
     }
 
     public String getLevel() {
@@ -163,7 +163,7 @@ public class Purchase {
     }
 
     public void setWarehouse(String warehouse) {
-        warehouse = warehouse;
+        this.warehouse = warehouse;
     }
 
     public String getPurchaseSport() {
@@ -187,7 +187,7 @@ public class Purchase {
     }
 
     public void setProcurementNotes(String procurementNotes) {
-        procurementNotes = procurementNotes;
+        this.procurementNotes = procurementNotes;
     }
 
     public String getPaymentMethod() {
@@ -211,7 +211,7 @@ public class Purchase {
     }
 
     public void setReceivingAddress(String receivingAddress) {
-        receivingAddress = receivingAddress;
+        this.receivingAddress = receivingAddress;
     }
 
     public Date getProcurementDeadline() {
@@ -235,7 +235,7 @@ public class Purchase {
     }
 
     public void setContactPeople(String contactPeople) {
-        contactPeople = contactPeople;
+        this.contactPeople = contactPeople;
     }
 
     public String getCompanyName() {
@@ -243,7 +243,7 @@ public class Purchase {
     }
 
     public void setCompanyName(String companyName) {
-        companyName = companyName;
+        this.companyName = companyName;
     }
 
     public String getPhone() {
