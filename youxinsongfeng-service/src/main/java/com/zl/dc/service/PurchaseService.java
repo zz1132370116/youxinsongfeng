@@ -27,4 +27,8 @@ public class PurchaseService {
         List<Purchase> list = purchaseMapper.selectByExample(example);
         return list;
     }
+
+    public void savePurchase(Purchase purchase){
+        purchaseMapper.insert(purchase);
+    }
 }

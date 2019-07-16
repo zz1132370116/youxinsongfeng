@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -19,36 +20,36 @@ public class Purchase {
     @Column(name = "Purchase_Title")
     private String purchaseTitle;
     @Column(name="product_name")
-    private String ProductName;
+    private String productName;
     @Column(name = "Origin_requirements")
-    private String OriginRequirements;
+    private String originRequirements;
     @Column(name = "Specification_type")
-    private String SpecificationType;
+    private String specificationType;
     @Column(name = "LEVEL")
     private String level;
     @Column(name = "Warehouse")
-    private String Warehouse;
+    private String warehouse;
     @Column(name = "Goods_in_stock")
     private String purchaseSport;
     @Column(name = "Price")
     private String purchasePrice;
     @Column(name = "Procurement_Notes")
-    private String ProcurementNotes;
+    private String procurementNotes;
     @Column(name = "Payment_method")
     private String paymentMethod;
     @Column(name = "Invoice_type")
     private String invoiceType;
     @Column(name = "Receiving_address")
-    private String ReceivingAddress;
+    private String receivingAddress;
     @Column(name = "Purchasing_deadline")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Timestamp procurementDeadline;
+    private Date procurementDeadline;
     @Column(name = "state")
     private Integer state;
     @Column(name = "contact_people")
-    private String ContactPeople;
+    private String contactPeople;
     @Column(name = "company_name")
-    private String CompanyName;
+    private String companyName;
     @Column(name = "phone")
     private String phone;
 
@@ -62,49 +63,49 @@ public class Purchase {
         Purchase purchase = (Purchase) o;
         return Objects.equals(purchaseId, purchase.purchaseId) &&
                 Objects.equals(purchaseTitle, purchase.purchaseTitle) &&
-                Objects.equals(ProductName, purchase.ProductName) &&
-                Objects.equals(OriginRequirements, purchase.OriginRequirements) &&
-                Objects.equals(SpecificationType, purchase.SpecificationType) &&
+                Objects.equals(productName, purchase.productName) &&
+                Objects.equals(originRequirements, purchase.originRequirements) &&
+                Objects.equals(specificationType, purchase.specificationType) &&
                 Objects.equals(level, purchase.level) &&
-                Objects.equals(Warehouse, purchase.Warehouse) &&
+                Objects.equals(warehouse, purchase.warehouse) &&
                 Objects.equals(purchaseSport, purchase.purchaseSport) &&
                 Objects.equals(purchasePrice, purchase.purchasePrice) &&
-                Objects.equals(ProcurementNotes, purchase.ProcurementNotes) &&
+                Objects.equals(procurementNotes, purchase.procurementNotes) &&
                 Objects.equals(paymentMethod, purchase.paymentMethod) &&
                 Objects.equals(invoiceType, purchase.invoiceType) &&
-                Objects.equals(ReceivingAddress, purchase.ReceivingAddress) &&
+                Objects.equals(receivingAddress, purchase.receivingAddress) &&
                 Objects.equals(procurementDeadline, purchase.procurementDeadline) &&
                 Objects.equals(state, purchase.state) &&
-                Objects.equals(ContactPeople, purchase.ContactPeople) &&
-                Objects.equals(CompanyName, purchase.CompanyName) &&
+                Objects.equals(contactPeople, purchase.contactPeople) &&
+                Objects.equals(companyName, purchase.companyName) &&
                 Objects.equals(phone, purchase.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(purchaseId, purchaseTitle, ProductName, OriginRequirements, SpecificationType, level, Warehouse, purchaseSport, purchasePrice, ProcurementNotes, paymentMethod, invoiceType, ReceivingAddress, procurementDeadline, state, ContactPeople, CompanyName, phone);
+        return Objects.hash(purchaseId, purchaseTitle, productName, originRequirements, specificationType, level, warehouse, purchaseSport, purchasePrice, procurementNotes, paymentMethod, invoiceType, receivingAddress, procurementDeadline, state, contactPeople, companyName, phone);
     }
 
     @Override
     public String toString() {
-        return "Purchase{" +
+        return "purchase{" +
                 "purchaseId='" + purchaseId + '\'' +
                 ", purchaseTitle='" + purchaseTitle + '\'' +
-                ", ProductName='" + ProductName + '\'' +
-                ", OriginRequirements='" + OriginRequirements + '\'' +
-                ", SpecificationType='" + SpecificationType + '\'' +
+                ", productName='" + productName + '\'' +
+                ", originRequirements='" + originRequirements + '\'' +
+                ", specificationType='" + specificationType + '\'' +
                 ", level='" + level + '\'' +
-                ", Warehouse='" + Warehouse + '\'' +
+                ", warehouse='" + warehouse + '\'' +
                 ", purchaseSport='" + purchaseSport + '\'' +
                 ", purchasePrice='" + purchasePrice + '\'' +
-                ", ProcurementNotes='" + ProcurementNotes + '\'' +
+                ", procurementNotes='" + procurementNotes + '\'' +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", invoiceType='" + invoiceType + '\'' +
-                ", ReceivingAddress='" + ReceivingAddress + '\'' +
+                ", receivingAddress='" + receivingAddress + '\'' +
                 ", procurementDeadline=" + procurementDeadline +
                 ", state=" + state +
-                ", ContactPeople='" + ContactPeople + '\'' +
-                ", CompanyName='" + CompanyName + '\'' +
+                ", contactPeople='" + contactPeople + '\'' +
+                ", companyName='" + companyName + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
     }
@@ -126,27 +127,27 @@ public class Purchase {
     }
 
     public String getProductName() {
-        return ProductName;
+        return productName;
     }
 
     public void setProductName(String productName) {
-        ProductName = productName;
+        productName = productName;
     }
 
     public String getOriginRequirements() {
-        return OriginRequirements;
+        return originRequirements;
     }
 
     public void setOriginRequirements(String originRequirements) {
-        OriginRequirements = originRequirements;
+        originRequirements = originRequirements;
     }
 
     public String getSpecificationType() {
-        return SpecificationType;
+        return specificationType;
     }
 
     public void setSpecificationType(String specificationType) {
-        SpecificationType = specificationType;
+        specificationType = specificationType;
     }
 
     public String getLevel() {
@@ -158,11 +159,11 @@ public class Purchase {
     }
 
     public String getWarehouse() {
-        return Warehouse;
+        return warehouse;
     }
 
     public void setWarehouse(String warehouse) {
-        Warehouse = warehouse;
+        warehouse = warehouse;
     }
 
     public String getPurchaseSport() {
@@ -182,11 +183,11 @@ public class Purchase {
     }
 
     public String getProcurementNotes() {
-        return ProcurementNotes;
+        return procurementNotes;
     }
 
     public void setProcurementNotes(String procurementNotes) {
-        ProcurementNotes = procurementNotes;
+        procurementNotes = procurementNotes;
     }
 
     public String getPaymentMethod() {
@@ -206,18 +207,18 @@ public class Purchase {
     }
 
     public String getReceivingAddress() {
-        return ReceivingAddress;
+        return receivingAddress;
     }
 
     public void setReceivingAddress(String receivingAddress) {
-        ReceivingAddress = receivingAddress;
+        receivingAddress = receivingAddress;
     }
 
-    public Timestamp getProcurementDeadline() {
+    public Date getProcurementDeadline() {
         return procurementDeadline;
     }
 
-    public void setProcurementDeadline(Timestamp procurementDeadline) {
+    public void setProcurementDeadline(Date procurementDeadline) {
         this.procurementDeadline = procurementDeadline;
     }
 
@@ -230,19 +231,19 @@ public class Purchase {
     }
 
     public String getContactPeople() {
-        return ContactPeople;
+        return contactPeople;
     }
 
     public void setContactPeople(String contactPeople) {
-        ContactPeople = contactPeople;
+        contactPeople = contactPeople;
     }
 
     public String getCompanyName() {
-        return CompanyName;
+        return companyName;
     }
 
     public void setCompanyName(String companyName) {
-        CompanyName = companyName;
+        companyName = companyName;
     }
 
     public String getPhone() {
@@ -256,21 +257,21 @@ public class Purchase {
     public Purchase(String purchaseId, String purchaseTitle, String productName, String originRequirements, String specificationType, String level, String warehouse, String purchaseSport, String purchasePrice, String procurementNotes, String paymentMethod, String invoiceType, String receivingAddress, Timestamp procurementDeadline, Integer state, String contactPeople, String companyName, String phone) {
         this.purchaseId = purchaseId;
         this.purchaseTitle = purchaseTitle;
-        ProductName = productName;
-        OriginRequirements = originRequirements;
-        SpecificationType = specificationType;
+        this.productName = productName;
+        this.originRequirements = originRequirements;
+        this.specificationType = specificationType;
         this.level = level;
-        Warehouse = warehouse;
+        this.warehouse = warehouse;
         this.purchaseSport = purchaseSport;
         this.purchasePrice = purchasePrice;
-        ProcurementNotes = procurementNotes;
+        this.procurementNotes = procurementNotes;
         this.paymentMethod = paymentMethod;
         this.invoiceType = invoiceType;
-        ReceivingAddress = receivingAddress;
+        this.receivingAddress = receivingAddress;
         this.procurementDeadline = procurementDeadline;
         this.state = state;
-        ContactPeople = contactPeople;
-        CompanyName = companyName;
+        this.contactPeople = contactPeople;
+        this.companyName = companyName;
         this.phone = phone;
     }
 }

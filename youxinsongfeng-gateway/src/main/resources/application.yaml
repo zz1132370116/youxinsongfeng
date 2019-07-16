@@ -52,3 +52,4 @@ sc:
       - /search
       - /findAllResources
       - /findAllPurchases
+      - /releasePurchase
