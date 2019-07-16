@@ -18,9 +18,9 @@ import java.util.Objects;
 @Table(name = "commodity")
 public class Commodity {
     @Id
-    @Column(name = "commodityId", nullable = false, length = 100)
+    @Column(name = "commodityId")
     private String commodityId;
-    @Column(name = "commodity_name", nullable = false, length = 100)
+    @Column(name = "commodity_name")
     private String commodityName;
     @Column(name = "commodity_place")
     private String commodityPlace;
@@ -33,7 +33,7 @@ public class Commodity {
     @Column(name = "warehouse_requiements", nullable = false, length = 100)
     private String warehouseRequiements;
     @Column(name = "commodity_price", nullable = false)
-    private int commodityPrice;
+    private Integer commodityPrice;
     @Column(name = "commodity_currency", nullable = false)
     private String commodityCurrency;
     @Column(name = "commodity_warehouse", nullable = false, length = 100)

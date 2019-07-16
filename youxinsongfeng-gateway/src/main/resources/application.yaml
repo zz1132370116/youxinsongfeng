@@ -51,3 +51,4 @@ sc:
       - /changeUserInfo  #youxinsongfeng-service UserController
       - /search
       - /findAllResources
+      - /findAllPurchases

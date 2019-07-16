@@ -19,13 +19,13 @@ import java.util.Objects;
 public class Com {
     @Id
     @Column(name = "comId", nullable = false)
-    private int comId;
+    private Integer comId;
     @Column(name = "commodityId", nullable = false, length = 100)
     private String commodityId;
     @Transient
     private List<Commodity> commoditys;
     @Column(name = "companyId", nullable = false)
-    private int companyId;
+    private Integer companyId;
     @Transient
     private List<Company> Companys;
 
