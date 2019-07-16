@@ -52,4 +52,7 @@ sc:
       - /search
       - /findAllResources
       - /findAllPurchases
+      - /findPurchasesByid
+      - /findBystate
+      - /findBystateEnd
       - /releasePurchase
