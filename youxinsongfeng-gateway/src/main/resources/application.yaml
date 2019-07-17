@@ -57,3 +57,4 @@ sc:
       - /findBystateEnd
       - /releasePurchase
       - /findSortPurchases
+      - /findOne

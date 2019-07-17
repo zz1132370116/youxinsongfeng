@@ -72,7 +72,7 @@ public class PurchaseService {
         Example example = new Example(Purchase.class);
         example.setOrderByClause("PurchaseId DESC");
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("state",1);
+        criteria.andEqualTo("state",0);
         PageHelper.startPage(1,20,false);
         List<Purchase> purchases = purchaseMapper.selectByExample(example);
         return purchases;
