@@ -4,13 +4,10 @@ import com.github.pagehelper.PageInfo;
 import com.zl.dc.entity.Purchase;
 import com.zl.dc.service.PurchaseService;
 import com.zl.dc.vo.BaseResult;
-import org.apache.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -64,11 +61,23 @@ public class PurchaseController {
 
     }
 
-
+    /**
+     * 发布资源单
+     */
     @PostMapping("/releasePurchase")
-    public ResponseEntity<BaseResult> releasePurchase(@RequestBody Purchase purchase, HttpServletRequest request){
+    public ResponseEntity<BaseResult> releasePurchase(@RequestBody Purchase purchase){
         System.out.println(purchase);
+        purchase.setState(0);
         purchaseService.savePurchase(purchase);
         return ResponseEntity.ok(new BaseResult(0,"发布采购单成功"));
+    }
+
+    /**
+     * 获取热门采购单
+     */
+    @GetMapping("/findSortPurchases")
+    public ResponseEntity<BaseResult> findSortPurchases(){
+        List<Purchase> purchases = purchaseService.findSortPurchases();
+        return ResponseEntity.ok(new BaseResult(0,"获取热门采购单成功").append("purchases",purchases));
     }
 }
