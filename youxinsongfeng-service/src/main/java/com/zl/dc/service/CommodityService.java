@@ -30,20 +30,23 @@ public class CommodityService {
         Example example = new Example(Commodity.class);
         Example.Criteria criteria = example.createCriteria();
         if (commodity.getCommodityName() !=null && commodity.getCommodityName() != ""){
-            criteria.andEqualTo("commodity_name",commodity.getCommodityName());
+            criteria.andEqualTo("commodityName",commodity.getCommodityName());
         }
         if (commodity.getCommodityPlace()!=null && commodity.getCommodityPlace() != ""){
-            criteria.andEqualTo("commodity_place",commodity.getCommodityPlace());
+            criteria.andEqualTo("commodityPlace",commodity.getCommodityPlace());
         }
         if (commodity.getCommodityLevel() !=null && commodity.getCommodityLevel() != ""){
-            criteria.andEqualTo("commodity_level",commodity.getCommodityLevel());
+            criteria.andEqualTo("commodityLevel",commodity.getCommodityLevel());
         }
         if (commodity.getCommodityWarehouse() !=null && commodity.getCommodityWarehouse() != ""){
-            criteria.andEqualTo("commodity_warehouse",commodity.getCommodityWarehouse());
+            criteria.andEqualTo("commodityWarehouse",commodity.getCommodityWarehouse());
         }
-        if (commodity.getCommodityWarehouse() !=null && commodity.getCommodityWarehouse() != ""){
-            criteria.andEqualTo("commodity_warehouse",commodity.getCommodityWarehouse());
+        if (commodity.getCommoditySport() !=null && commodity.getCommoditySport() != ""){
+            criteria.andEqualTo("commoditySport",commodity.getCommoditySport());
         }
-       return commodityMapper.selectByExample(example);
+        if (commodity.getCommoditySpecification() !=null && commodity.getCommoditySpecification() != ""){
+            criteria.andEqualTo("commoditySpecification",commodity.getCommoditySpecification());
+        }
+        return commodityMapper.selectByExample(example);
     }
 }
