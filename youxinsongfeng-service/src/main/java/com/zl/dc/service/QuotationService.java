@@ -33,7 +33,9 @@ public class QuotationService {
      */
     public List<Warehouse> SearchQuotation(Warehouse quotation) {
         Example example = new Example(Warehouse.class);
+        Example example1 = new Example(Classification.class);
         Example.Criteria criteria = example.createCriteria();
+        Example.Criteria criteria1 = example1.createCriteria();
         if (quotation.getPhone() != null && quotation.getPhone().equals("")){
             criteria.andEqualTo("phone",quotation.getPhone());
         }
@@ -46,10 +48,17 @@ public class QuotationService {
         List<Warehouse> warehouse = warehouseMapper.selectByExample(example);
         for (Warehouse warehouse1 : warehouse) {
             //通过商品名查询所对应的分类信息
-            Classification classification =classificationMapper.selectClassByName(warehouse1.getProductName());
-            //通过父类id查询
-            Classification classification1 = classificationMapper.selectClassByParent(classification.getClassificationParent());
-            warehouse1.setClassificationName(classification1.getClassificationName());
+            criteria1.andEqualTo("classificationName",warehouse1.getProductName());
+
+            Classification classification = classificationMapper.selectOneByExample(example1);
+            if (classification !=null){
+                Classification classification1 = classificationMapper.selectByPrimaryKey(classification.getClassificationParent());
+                if (classification1 !=null){
+                    warehouse1.setClassificationName(classification1.getClassificationName());
+                }
+            }
+
+
         }
         return warehouse ;
     }

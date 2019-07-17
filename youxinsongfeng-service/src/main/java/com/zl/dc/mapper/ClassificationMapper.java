@@ -18,8 +18,8 @@ import java.util.List;
 public interface ClassificationMapper extends Mapper<Classification> {
 
     @Select("select * from classification where Classification_name = #{Classification_name}")
-    Classification selectClassByName(@Param("Classification_name") String productName);
+    Classification selectClassByName(@Param("Classification_name") String classificationName);
 
-    @Select("select * from classification where classification_parent = #{classification_parent}")
+    @Select("select * from classification where classification_id = #{classification_parent}")
     Classification selectClassByParent(@Param("classification_parent") String classificationParent);
 }
