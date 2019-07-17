@@ -57,8 +57,24 @@ public class PurchaseService {
         return pageInfo;
     }
 
+    /**
+     * 发布资源单
+     * @param purchase
+     */
     public void savePurchase(Purchase purchase){
         purchaseMapper.insert(purchase);
     }
 
+    /**
+     * 获取热门资源单
+     */
+    public List<Purchase> findSortPurchases(){
+        Example example = new Example(Purchase.class);
+        example.setOrderByClause("PurchaseId DESC");
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("state",0);
+        PageHelper.startPage(1,20,false);
+        List<Purchase> purchases = purchaseMapper.selectByExample(example);
+        return purchases;
+    }
 }
