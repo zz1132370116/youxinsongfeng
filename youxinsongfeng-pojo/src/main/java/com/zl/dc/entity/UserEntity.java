@@ -26,8 +26,18 @@ public class UserEntity {
     private Integer cityid;
     private String address;
     private String nickname;
+    @Column(name = "STATUS")
+    private String state;
     @Transient
     private String code;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     @Id
     @Column(name = "userId", nullable = false)
