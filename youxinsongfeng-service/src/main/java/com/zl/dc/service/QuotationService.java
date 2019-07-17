@@ -1,6 +1,8 @@
 package com.zl.dc.service;
 
+import com.zl.dc.entity.Classification;
 import com.zl.dc.entity.Quotation;
+import com.zl.dc.mapper.ClassificationMapper;
 import com.zl.dc.mapper.QuotationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import java.util.List;
 public class QuotationService {
     @Autowired
     private QuotationMapper quotationMapper;
+    @Autowired
+    private ClassificationMapper classificationMapper;
 
     /**
      * 条件查询(名称,规格)
@@ -35,7 +39,15 @@ public class QuotationService {
         if (quotation.getSpecificationType() != null && quotation.getSpecificationType().equals("")){
             criteria.andEqualTo("specification_type",quotation.getSpecificationType());
         }
-        return quotationMapper.selectByExample(example);
+        List<Quotation> quotations = quotationMapper.selectByExample(example);
+        for (Quotation quotation1 : quotations) {
+            //通过商品名查询所对应的分类信息
+            Classification classification =classificationMapper.selectClassByName(quotation1.getProductName());
+            //通过父类id查询
+            Classification classification1 = classificationMapper.selectClassByParent(classification.getClassificationParent());
+            quotation1.setClassificationName(classification1.getClassificationName());
+        }
+        return quotations   ;
     }
 
     /**

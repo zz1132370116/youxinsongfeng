@@ -1,9 +1,6 @@
 package com.zl.dc.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -43,8 +40,18 @@ public class Quotation {
     private String address;
     @Column(name = "phone")
     private String phone;
+    @Transient
+    private Classification classification;
 
     public Quotation() {
+    }
+
+    public Classification getClassification() {
+        return classification;
+    }
+
+    public void setClassification(Classification classification) {
+        this.classification = classification;
     }
 
     public Quotation(Integer quotationId, String quotePeople, String classificationName, String productName, String place, String specificationType, String level, Integer quantity, float price, String currency, String sport, String warehouse, String remarks, String address, String phone) {

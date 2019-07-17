@@ -1,6 +1,7 @@
 package com.zl.dc.mapper;
 
 import com.zl.dc.entity.Classification;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -15,4 +16,10 @@ import java.util.List;
  */
 @org.apache.ibatis.annotations.Mapper
 public interface ClassificationMapper extends Mapper<Classification> {
+
+    @Select("select * from classification where Classification_name = #{Classification_name}")
+    Classification selectClassByName(@Param("Classification_name") String productName);
+
+    @Select("select * from classification where classification_parent = #{classification_parent}")
+    Classification selectClassByParent(@Param("classification_parent") String classificationParent);
 }
