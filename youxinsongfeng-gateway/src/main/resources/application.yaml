@@ -59,3 +59,5 @@ sc:
       - /findSortPurchases
       - /searchQuotation
       - /saveQuitation
+      - /sms3
+      - /saveBank

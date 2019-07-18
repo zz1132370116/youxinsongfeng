@@ -70,4 +70,11 @@ public class UserService {
         //System.out.println(i);
         return updateStatus;
     }
+
+    public void saveBank(UserEntity userEntity) {
+        Example example = new Example(UserEntity.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("phone" , userEntity.getPhone() );
+        userMapper.updateByExampleSelective(userEntity,example);
+    }
 }
