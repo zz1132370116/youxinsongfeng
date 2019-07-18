@@ -35,5 +35,12 @@ public class CommodityController {
         return ResponseEntity.ok(new BaseResult(1,"查询失败"));
     }
 
-
+    @PostMapping("/findCommoditityById")
+    public ResponseEntity<BaseResult> findCommoditityById(@RequestBody Commodity commodity){
+        if (commodity != null){
+            Commodity commoditity = commodityService.findCommoditityById(commodity);
+            return ResponseEntity.ok(new BaseResult(0,"查询成功").append("data",commoditity));
+        }
+        return ResponseEntity.ok(new BaseResult(1,"查询失败"));
+    }
 }

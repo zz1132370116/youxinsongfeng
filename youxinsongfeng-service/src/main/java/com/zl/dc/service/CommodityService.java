@@ -49,4 +49,10 @@ public class CommodityService {
         }
         return commodityMapper.selectByExample(example);
     }
+
+    public Commodity findCommoditityById(Commodity commodity){
+        Commodity commodity1 = commodityMapper.selectByPrimaryKey(commodity.getCommodityId());
+
+        return commodity1;
+    }
 }
